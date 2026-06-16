@@ -178,7 +178,7 @@ body {
 /* ========== 网格列表 ========== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
   gap: 20px;
 }
 
@@ -261,7 +261,7 @@ body {
 /* 图片区域 */
 .card-image {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   background: #f8f8f8;
   display: flex;
@@ -277,20 +277,32 @@ body {
 
 /* 信息区域 */
 .card-info {
-  padding: 12px 14px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-.card-meta {
+.card-info-left {
+  flex: 1;
+  min-width: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-title {
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-size {
-  font-size: 12px;
+  font-size: 11px;
   color: #999;
-  font-weight: 500;
 }
 
 .card-time {
@@ -298,27 +310,33 @@ body {
   color: #bbb;
 }
 
-.card-url {
-  font-size: 12px;
+.card-info-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.card-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #f0f4f0;
   color: #468432;
   text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
+  transition: all 0.2s;
 }
 
-.card-url:hover {
-  text-decoration: underline;
+.card-link-btn:hover {
+  background: #468432;
+  color: #fff;
 }
 
-.card-title {
-  font-size: 12px;
-  color: #888;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-top: 4px;
+.card-link-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* ========== Loading ========== */

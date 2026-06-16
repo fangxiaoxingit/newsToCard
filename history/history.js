@@ -92,12 +92,20 @@
         <img src="${imgUrl}" alt="截图 #${item.id}" loading="lazy">
       </div>
       <div class="card-info">
-        <div class="card-meta">
-          <span class="card-size">${item.width} × ${item.height}</span>
-          <span class="card-time">${time}</span>
+        <div class="card-info-left">
+          <div class="card-title" title="${escapeHtml(item.title || '')}">${escapeHtml(item.title || '无标题')}</div>
+          <div class="card-size">${item.width} × ${item.height}</div>
+          <div class="card-time">${time}</div>
         </div>
-        <a class="card-url" href="${escapeHtml(item.url)}" target="_blank" data-action="url" title="${escapeHtml(item.url)}">${escapeHtml(urlShort)}</a>
-        ${item.title ? `<div class="card-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>` : ''}
+        <div class="card-info-right">
+          <a class="card-link-btn" href="${escapeHtml(item.url)}" target="_blank" data-action="url" title="${escapeHtml(item.url)}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
       </div>
     `;
 
