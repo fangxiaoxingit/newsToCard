@@ -1,5 +1,5 @@
 /**
- * NewsToCard - 主内容脚本
+ * CutWebImage - 主内容脚本
  * 功能：浮球、蒙版、矩形框选、截图裁剪、剪贴板、Toast
  */
 
@@ -7,8 +7,8 @@
   'use strict';
 
   // 防止重复注入
-  if (window.__ntcInjected) return;
-  window.__ntcInjected = true;
+  if (window.__cwiInjected) return;
+  window.__cwiInjected = true;
 
   // ========== 状态变量 ==========
   let isCapturing = false;        // 是否处于截图模式
@@ -32,7 +32,7 @@
   function createFloatBall() {
     // Shadow DOM host
     floatBall = document.createElement('div');
-    floatBall.id = 'ntc-float-ball-host';
+    floatBall.id = 'cwi-float-ball-host';
     Object.assign(floatBall.style, {
       position: 'fixed',
       zIndex: '2147483647',
@@ -172,7 +172,7 @@
   function saveBallPosition() {
     try {
       const rect = floatBall.getBoundingClientRect();
-      localStorage.setItem('ntc-ball-pos', JSON.stringify({
+      localStorage.setItem('cwi-ball-pos', JSON.stringify({
         left: rect.left,
         top: rect.top
       }));
@@ -181,7 +181,7 @@
 
   function loadBallPosition() {
     try {
-      const data = localStorage.getItem('ntc-ball-pos');
+      const data = localStorage.getItem('cwi-ball-pos');
       return data ? JSON.parse(data) : null;
     } catch (e) {
       return null;
@@ -198,14 +198,14 @@
     floatBall.style.display = 'none';
 
     // 禁止页面选择
-    document.body.classList.add('ntc-capturing');
+    document.body.classList.add('cwi-capturing');
 
     // 通过事件拦截阻止滚动（不修改 overflow，避免滚动位置丢失）
     addScrollBlockers();
 
     // 创建蒙版
     overlay = document.createElement('div');
-    overlay.id = 'ntc-overlay';
+    overlay.id = 'cwi-overlay';
     Object.assign(overlay.style, {
       position: 'fixed',
       top: '0',
@@ -220,7 +220,7 @@
 
     // 创建矩形选择框（初始不可见）
     selectionRect = document.createElement('div');
-    selectionRect.id = 'ntc-selection-rect';
+    selectionRect.id = 'cwi-selection-rect';
     Object.assign(selectionRect.style, {
       position: 'fixed',
       border: '2px dashed #4A90D9',
@@ -234,7 +234,7 @@
 
     // 尺寸标签
     sizeLabel = document.createElement('div');
-    sizeLabel.id = 'ntc-size-label';
+    sizeLabel.id = 'cwi-size-label';
     Object.assign(sizeLabel.style, {
       position: 'fixed',
       background: 'rgba(74, 144, 217, 0.9)',
@@ -265,7 +265,7 @@
     if (sizeLabel) { sizeLabel.remove(); sizeLabel = null; }
 
     // 恢复页面
-    document.body.classList.remove('ntc-capturing');
+    document.body.classList.remove('cwi-capturing');
     removeScrollBlockers();
 
     // 恢复浮球
@@ -357,7 +357,7 @@
     if (overlay) { overlay.remove(); overlay = null; }
     if (selectionRect) { selectionRect.remove(); selectionRect = null; }
     if (sizeLabel) { sizeLabel.remove(); sizeLabel = null; }
-    document.body.classList.remove('ntc-capturing');
+    document.body.classList.remove('cwi-capturing');
     removeScrollBlockers();
 
     // 执行截图
@@ -465,12 +465,12 @@
           }
         });
       } catch (e) {
-        console.warn('[NewsToCard] 保存历史记录失败:', e);
+        console.warn('[CutWebImage] 保存历史记录失败:', e);
       }
 
       showToast('success', '已复制到剪贴板 ✓');
     } catch (err) {
-      console.error('[NewsToCard] 截图失败:', err);
+      console.error('[CutWebImage] 截图失败:', err);
       showToast('error', '截图失败: ' + err.message);
     } finally {
       // 恢复浮球
@@ -494,7 +494,7 @@
     removeToast();
 
     toastHost = document.createElement('div');
-    toastHost.id = 'ntc-toast-host';
+    toastHost.id = 'cwi-toast-host';
     Object.assign(toastHost.style, {
       position: 'fixed',
       top: '20px',
@@ -590,7 +590,7 @@
 
     // SPA 路由切换时确保浮球存在
     const observer = new MutationObserver(() => {
-      if (!document.getElementById('ntc-float-ball-host') && !isCapturing) {
+      if (!document.getElementById('cwi-float-ball-host') && !isCapturing) {
         createFloatBall();
       }
     });

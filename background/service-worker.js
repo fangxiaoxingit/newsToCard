@@ -1,9 +1,9 @@
 /**
- * NewsToCard - Service Worker
+ * CutWebImage - Service Worker
  * 处理截图请求 + IndexedDB 历史记录存储
  */
 
-const NTC_DB_NAME = 'NewsToCardDB';
+const NTC_DB_NAME = 'CutWebImageDB';
 const NTC_DB_VERSION = 1;
 const NTC_STORE_NAME = 'snapshots';
 
@@ -30,7 +30,7 @@ async function handleCaptureVisibleTab(tab) {
     });
     return { dataUrl, error: null };
   } catch (err) {
-    console.error('[NewsToCard] captureVisibleTab failed:', err);
+    console.error('[CutWebImage] captureVisibleTab failed:', err);
     return { dataUrl: null, error: err.message };
   }
 }
@@ -82,7 +82,7 @@ async function handleSaveSnapshot(data) {
 
     return { success: true, id };
   } catch (err) {
-    console.error('[NewsToCard] save snapshot failed:', err);
+    console.error('[CutWebImage] save snapshot failed:', err);
     return { success: false, error: err.message };
   }
 }

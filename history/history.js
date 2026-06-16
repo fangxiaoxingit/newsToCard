@@ -1,5 +1,5 @@
 /**
- * NewsToCard - 历史记录页面逻辑
+ * CutWebImage - 历史记录页面逻辑
  */
 
 (function () {
@@ -208,13 +208,13 @@
       const a = document.createElement('a');
       a.href = url;
       const dateStr = new Date().toISOString().slice(0, 10);
-      a.download = `NewsToCard_${dateStr}_${count}张.zip`;
+      a.download = `CutWebImage_${dateStr}_${count}张.zip`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
 
       showToast(`已导出 ${count} 张截图`, 'success');
     } catch (err) {
-      console.error('[NewsToCard] 导出失败:', err);
+      console.error('[CutWebImage] 导出失败:', err);
       showToast('导出失败: ' + err.message, 'error');
     }
   }
@@ -270,7 +270,7 @@
     const url = URL.createObjectURL(currentPreview.blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `newstocard_${currentPreview.id}_${Date.now()}.jpg`;
+    a.download = `cutwebimage_${currentPreview.id}_${Date.now()}.jpg`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }

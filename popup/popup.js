@@ -1,9 +1,9 @@
 /**
- * NewsToCard - Popup 脚本
+ * CutWebImage - Popup 脚本
  * 处理历史记录入口和数量显示
  */
 
-const DB_NAME = 'NewsToCardDB';
+const DB_NAME = 'CutWebImageDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'snapshots';
 
