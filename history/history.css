@@ -41,7 +41,7 @@ body {
 .brand {
   font-size: 18px;
   font-weight: 700;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #5a9e42, #468432);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -55,7 +55,7 @@ body {
   height: 22px;
   padding: 0 6px;
   border-radius: 11px;
-  background: #667eea;
+  background: #468432;
   color: #fff;
   font-size: 12px;
   font-weight: 600;
@@ -105,12 +105,12 @@ body {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #5a9e42, #468432);
   color: #fff;
 }
 
 .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 2px 8px rgba(70, 132, 50, 0.4);
   transform: translateY(-1px);
 }
 
@@ -197,7 +197,7 @@ body {
 }
 
 .card.selected {
-  outline: 3px solid #667eea;
+  outline: 3px solid #468432;
   outline-offset: -3px;
 }
 
@@ -226,8 +226,8 @@ body {
 }
 
 .card.selected .card-checkbox {
-  background: #667eea;
-  border-color: #667eea;
+  background: #468432;
+  border-color: #468432;
 }
 
 .card.selected .card-checkbox::after {
@@ -298,7 +298,7 @@ body {
 
 .card-url {
   font-size: 12px;
-  color: #667eea;
+  color: #468432;
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -338,7 +338,7 @@ body {
   width: 20px;
   height: 20px;
   border: 2px solid #e0e0e0;
-  border-top-color: #667eea;
+  border-top-color: #468432;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

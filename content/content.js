@@ -60,8 +60,8 @@
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, #5a9e42 0%, #468432 100%);
+        box-shadow: 0 4px 15px rgba(70, 132, 50, 0.4);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -73,7 +73,7 @@
       }
       .ball:hover {
         transform: scale(1.1);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        box-shadow: 0 6px 20px rgba(70, 132, 50, 0.6);
       }
       .ball:active {
         transform: scale(0.95);
