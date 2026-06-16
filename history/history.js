@@ -13,6 +13,7 @@
   const btnSelectAll = document.getElementById('btnSelectAll');
   const btnDeselectAll = document.getElementById('btnDeselectAll');
   const btnDeleteSelected = document.getElementById('btnDeleteSelected');
+  const btnExportSelected = document.getElementById('btnExportSelected');
   const btnRefresh = document.getElementById('btnRefresh');
   const previewModal = document.getElementById('previewModal');
   const modalBackdrop = document.getElementById('modalBackdrop');
@@ -151,11 +152,15 @@
   function updateToolbar() {
     const hasSelection = selectedIds.size > 0;
     btnDeleteSelected.disabled = !hasSelection;
+    btnExportSelected.disabled = !hasSelection;
     if (hasSelection) {
       btnDeleteSelected.querySelector('svg').nextSibling.textContent =
         ` 清除已选(${selectedIds.size})`;
+      btnExportSelected.querySelector('svg').nextSibling.textContent =
+        ` 导出已选(${selectedIds.size})`;
     } else {
       btnDeleteSelected.querySelector('svg').nextSibling.textContent = ' 清除已选';
+      btnExportSelected.querySelector('svg').nextSibling.textContent = ' 导出已选';
     }
   }
 
@@ -173,6 +178,53 @@
     } catch (err) {
       showToast('删除失败: ' + err.message, 'error');
     }
+  }
+
+  // ========== 批量导出 ==========
+
+  async function exportSelected() {
+    if (selectedIds.size === 0) return;
+
+    const selectedItems = snapshots
+      .filter(item => selectedIds.has(item.id))
+      .sort((a, b) => a.timestamp - b.timestamp); // 按时间正序编号
+
+    const count = selectedItems.length;
+    showToast(`正在打包 ${count} 张截图...`);
+
+    try {
+      const zip = new JSZip();
+
+      selectedItems.forEach((item, index) => {
+        // 序号 + 页面标题作为文件名
+        const seq = String(index + 1).padStart(3, '0');
+        const name = sanitizeFilename(item.title || 'untitled');
+        const filename = `${seq}_${name}_${item.width}x${item.height}.png`;
+        zip.file(filename, item.blob);
+      });
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      const dateStr = new Date().toISOString().slice(0, 10);
+      a.download = `NewsToCard_${dateStr}_${count}张.zip`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+
+      showToast(`已导出 ${count} 张截图`, 'success');
+    } catch (err) {
+      console.error('[NewsToCard] 导出失败:', err);
+      showToast('导出失败: ' + err.message, 'error');
+    }
+  }
+
+  function sanitizeFilename(name) {
+    // 移除文件名中不合法字符，截断长度
+    return name
+      .replace(/[\\/:*?"<>|\r\n\t]/g, '')
+      .replace(/\s+/g, '_')
+      .slice(0, 50) || 'untitled';
   }
 
   // ========== 预览弹窗 ==========
@@ -284,6 +336,7 @@
   btnSelectAll.addEventListener('click', selectAll);
   btnDeselectAll.addEventListener('click', deselectAll);
   btnDeleteSelected.addEventListener('click', deleteSelected);
+  btnExportSelected.addEventListener('click', exportSelected);
   btnRefresh.addEventListener('click', loadSnapshots);
   modalBackdrop.addEventListener('click', closePreview);
   modalClose.addEventListener('click', closePreview);
