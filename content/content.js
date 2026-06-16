@@ -441,17 +441,15 @@
 
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, sw, sh);
 
-      // 转为 Blob
-      const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob 失败')), 'image/jpeg', 0.92);
+      // 剪贴板写入（仅支持 PNG 格式）
+      const pngBlob = await new Promise((resolve, reject) => {
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob 失败')), 'image/png');
       });
-
-      // 写入剪贴板
       await navigator.clipboard.write([
-        new ClipboardItem({ 'image/jpeg': blob })
+        new ClipboardItem({ 'image/png': pngBlob })
       ]);
 
-      // 保存历史记录（发送 dataURL 到 service worker）
+      // 保存历史记录（JPEG 格式，体积更小）
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.92);
       try {
         await chrome.runtime.sendMessage({

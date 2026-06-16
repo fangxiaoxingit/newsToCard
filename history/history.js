@@ -251,13 +251,31 @@
   async function copyCurrentImage() {
     if (!currentPreview) return;
     try {
+      // 剪贴板仅支持 PNG，需转换
+      const pngBlob = await convertToPng(currentPreview.blob);
       await navigator.clipboard.write([
-        new ClipboardItem({ 'image/jpeg': currentPreview.blob })
+        new ClipboardItem({ 'image/png': pngBlob })
       ]);
       showToast('已复制到剪贴板', 'success');
     } catch (err) {
       showToast('复制失败: ' + err.message, 'error');
     }
+  }
+
+  function convertToPng(blob) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('PNG 转换失败')), 'image/png');
+        URL.revokeObjectURL(img.src);
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(blob);
+    });
   }
 
   function openCurrentUrl() {
