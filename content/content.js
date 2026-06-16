@@ -443,16 +443,16 @@
 
       // 转为 Blob
       const blob = await new Promise((resolve, reject) => {
-        canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob 失败')), 'image/png');
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob 失败')), 'image/jpeg', 0.92);
       });
 
       // 写入剪贴板
       await navigator.clipboard.write([
-        new ClipboardItem({ 'image/png': blob })
+        new ClipboardItem({ 'image/jpeg': blob })
       ]);
 
       // 保存历史记录（发送 dataURL 到 service worker）
-      const imageDataUrl = canvas.toDataURL('image/png');
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.92);
       try {
         await chrome.runtime.sendMessage({
           type: 'SAVE_SNAPSHOT',

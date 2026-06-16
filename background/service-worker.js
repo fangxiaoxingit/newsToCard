@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function handleCaptureVisibleTab(tab) {
   try {
     const dataUrl = await chrome.tabs.captureVisibleTab(null, {
-      format: 'png'
+      format: 'jpeg'
     });
     return { dataUrl, error: null };
   } catch (err) {

@@ -199,7 +199,7 @@
         // 序号 + 页面标题作为文件名
         const seq = String(index + 1).padStart(3, '0');
         const name = sanitizeFilename(item.title || 'untitled');
-        const filename = `${seq}_${name}_${item.width}x${item.height}.png`;
+        const filename = `${seq}_${name}_${item.width}x${item.height}.jpg`;
         zip.file(filename, item.blob);
       });
 
@@ -252,7 +252,7 @@
     if (!currentPreview) return;
     try {
       await navigator.clipboard.write([
-        new ClipboardItem({ 'image/png': currentPreview.blob })
+        new ClipboardItem({ 'image/jpeg': currentPreview.blob })
       ]);
       showToast('已复制到剪贴板', 'success');
     } catch (err) {
@@ -270,7 +270,7 @@
     const url = URL.createObjectURL(currentPreview.blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `newstocard_${currentPreview.id}_${Date.now()}.png`;
+    a.download = `newstocard_${currentPreview.id}_${Date.now()}.jpg`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
