@@ -1,3 +1,5 @@
+**中文** | [English](README_EN.md)
+
 # CutWebImage - 网页截图工具
 
 一款 Chrome 浏览器扩展，点击浮球、拖拽框选网页区域，一键截图复制到剪贴板。
